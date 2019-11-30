@@ -4,12 +4,225 @@
     <meta charset="utf-8">
     <title>Bootstrap框架</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+<!--    <script type="text/javascript" src="js/script.js"></script>-->
+<!--    <link type="text/css" href="css/style.css" rel="stylesheet" />-->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f2f2f2;
+        }
+        /***********头部的导航栏*******/
+        .head{
+            position: relative;
+            width: 100%;
+            height: 100px;
+            background-color: #1d2124;
+            color: #f2f2f2;
+        }
+        .lable{
+            width: 200px;
+            height: 100%;
+            margin-left: 150px;
+            font-size: 35px;
+            line-height: 100px;
+            display: inline-block;
+        }
+        .headTab{
+            display: inline-block;
+            width: 800px;
+            height: 100%;
+            list-style: none;
+            line-height: 100px;
+            font-size: 20px;
+            color: #f2f2f2;
+        }
+        .headTab li{
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+        }
+        .head_search{
+            display: inline-block;
+            position: absolute;
+            top: 25px;
+            right: 500px;
+            background-color: white;
+            width: 300px;
+            height: 50px;
+            border-radius: 30px;
+        }
+        .head_search img{
+            margin-left: 8px;
+        }
+        #search{
+            display: inline-block;
+            width: 70%;
+            height: 100%;
+            border: 0;
+            outline:none;
+            color: black;
+        }
+        /***********中间的身体*******/
+        .main{
+            width: 60%;
+            margin: 0 auto;
+            padding: 30px;
+            padding-top: 40px;
+            border: 1px solid darkgray;
+            background-color: white;
+        }
+        /*轮播图*/
+        .carousel-inner img{
+            margin-left: 500px;
+        }
+        /*身体中的盒子*/
+        .bigBox{
+            width:100%;
+            margin: 0 auto;
+        }
+        .boxHead{
+            width: 100%;
+            height: 50px;
+            font-size: 30px;
+            font-family:Arial,Helvetica,sans-serif;
+            line-height: 50px;
+            padding-left: 50px;
+            border-bottom: 3px solid green;
+        }
+        .songSheet{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .songSheet li{
+            width: 20%;
+            height: 300px;
+            margin: 20px 1px;
+            list-style: none;
+            display: inline-block;
+        }
+        .songSheet img{
+            width: 100%;
+            height: auto;
+        }
+        .songSheet img:hover{
+            border: 2px solid #34ce57;
+        }
+        .newSong .songSheet li{
+            width: 15%;
+            height: 200px;
+        }
+        .newSong .songSheet li img{
+            border-radius: 40%;
+        }
 
-<h1>Hello, world!</h1>
+    </style>
+</head>
+<!--<body class='particle-network-animation'>-->
+<body>
+<!---------------------------------------上面的导航栏部分------------------------------->
+    <div class="head">
+        <div class="lable">网易云音乐</div>
+        <ul class="headTab">
+            <li>发现音乐</li>
+            <li>我的音乐</li>
+            <li>朋友</li>
+            <li>商城</li>
+            <li>音乐人</li>
+            <li>下载客户端</li>
+        </ul>
+        <div class="head_search">
+            <img src="img/search.png" alt="404">
+            <input type="text" id="search" placeholder="歌名/歌手/专辑"/>
+        </div>
+    </div>
+<!------------------------------------------中间的身体---------------------------------->
+    <div class="carousel"></div>
+                <!--------------------轮播图--------------------->
+<div id="myCarousel" class="carousel slide">
+    <!-- 轮播（Carousel）指标 -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="img/carousel1.jpg" alt="First slide">
+        </div>
+        <div class="item">
+            <img src="img/carousel2.jpg" alt="Second slide">
+        </div>
+        <div class="item">
+            <img src="img/carousel3.jpg" alt="Third slide">
+        </div>
+    </div>
+    <!-- 轮播（Carousel）导航 -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="main">
+    <!--------------------歌单推荐--------------------->
+    <div class="bigBox">
+        <div class="boxHead">热门推荐</div>
+        <ul class="songSheet">
+            <li><img src="img/songSheet1.jpg">
+                <h3>[vip专享]一周新歌推荐</h3></li>
+            <li><img src="img/songSheet2.jpg">
+                <h3>愿有星光的夜晚，总有浪漫期许</h3></li>
+            <li><img src="img/songSheet3.jpg">
+                <h3>成长篇| 认识到自己的平凡，并且接受</h3></li>
+            <li><img src="img/songSheet4.jpg">
+                <h3>【电台】小王子 Chapter nine</h3></li>
+            <li><img src="img/songSheet5.jpg">
+                <h3>经典老歌，久听不厌</h3></li>
+            <li><img src="img/songSheet6.jpg">
+                <h4>【电台】129 颠颠|编辑<br>罗丹妮：谁来记录我们乏善可陈的生活</h4></li>
+            <li><img src="img/songSheet7.jpg">
+                <h3>那些评论超过十万的歌，请随机播放</h3></li>
+            <li><img src="img/songSheet8.jpg">
+                <h3>【电台】琴师（Cover 音频怪物）</h3></li>
+        </ul>
+    </div>
+    <!--------------------新专辑--------------------->
+    <div class="bigBox">
+        <div class="boxHead">新碟上架</div>
+        <div class="newSong">
+            <ul class="songSheet">
+                <li><img src="img/newSong1.jpg">
+                    <h4>与火星孩子的对话<br>华晨宇</h4></li>
+                <li><img src="img/newSong2.jpg">
+                    <h4>MIRRORS<br>王嘉尔</h4></li>
+                <li><img src="img/newSong3.jpg">
+                    <h4>王嘉尔初恋那件小事<br>群星</h4></li>
+                <li><img src="img/newSong4.jpg">
+                    <h4>我爱你这是最好的<br>群星</h4></li>
+                <li><img src="img/newSong5.jpg">
+                    <h4>夜好<br>N.FLYING</h4></li>
+            </ul>
+        </div>
+
+    </div>
+    <!--------------------歌曲列表--------------------->
+    <div class="bigBox">
+        <div class="boxHead">榜单</div>
+
+    </div>
+</div>
 
 </body>
 </html>
