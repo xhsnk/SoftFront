@@ -12,7 +12,7 @@
             padding: 0;
         }
         body {
-            background-color: #f2f2f2;
+            background-color: #b9bbbe;
         }
         /***********头部的导航栏*******/
         .head{
@@ -65,7 +65,121 @@
             outline:none;
             color: black;
         }
+        .main{
+            position: relative;
+            width: 100%;
+        }
+        /************旋转唱片*********/
+        .circle-song{
+            position: absolute;
+            top: 50px;
+            left: 180px;
+            width: 650px;
+            height: 650px;
+            background-color: #7abaff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 650px;
+        }
+        .circle-song img{
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+        }
+        #last, #next{
+            position: absolute;
+            top: 300px;
+            left: 50px;
+            width: 50px;
+            height: 150px;
+            background-color: #34ce57;
+        }
+        #next{
+            left: 850px;
+        }
+
+        /************歌曲信息*********/
+        .info{
+            position: absolute;
+            top: 150px;
+            right: 150px;
+            width: 800px;
+            height: 400px;
+            background-color: #0f6674;
+        }
+        /*.infoInner{*/
+        /*    */
+        /*}*/
+        .btn{
+            font-size: 22px;
+            margin-right: 30px;
+        }
+        .btn img{
+            margin-right: 10px;
+        }
+
+        /************歌曲播放*********/
+        #music-player{
+            position: absolute;
+            top: 670px;
+            left: 950px;
+            width: 1000px;
+            height: 100px;
+            background-color: #17a2b8;
+        }
+        #music-player audio{
+            width: 100%;
+            height: 100px;
+        }
     </style>
+    <script>
+        $(function(){
+
+            //监听音乐播放状态
+            function status(){
+                let rotate;  //唱片旋转定时器
+                let audioStatus = "paused";
+                let audio = document.getElementById("myAudio");
+                audio.addEventListener("playing", function(){
+                    audioStatus = "playing";
+                    rotate = setInterval(circle_rotate, 20)
+                });
+                audio.addEventListener("pause", function(){
+                    audioStatus = "paused";
+                    clearInterval(rotate)
+                });
+            }
+            status();
+
+            //唱片旋转函数
+            let degree = 0;
+            function circle_rotate() {
+                degree = degree+ 40 * Math.PI / 180;
+                $(".circle-song").css("transform", "rotate("+degree+"deg)");
+            }
+
+            //切换歌曲
+            function chang_music(songName) {
+                songName = "music/缺氧.MP3"
+                $("#music-player").html("")
+                  let aud = $(' <audio  id="myAudio" controls>\n' +
+                          '  <source src="'+songName+'">\n' +
+                          ' </audio>')
+                  //放到容器里区
+                  $("#music-player").html(aud)
+                  //获取当前audio
+                  var audio = $("#myAudio")[0];
+                  //局部load()一下
+                  aud.load();
+                  status();
+                  audio.play();
+            }
+            //测试切换歌曲功能
+           // $(".circle-song").click(chang_music)
+            $("#next").click(chang_music)
+
+        })
+    </script>
 </head>
 <!--<body class='particle-network-animation'>-->
 <body>
@@ -86,7 +200,25 @@
     </div>
 </div>
 <!---------------------------------------播放音乐部分------------------------------->
-
+<div class="main">
+    <!---------------------------------------旋转唱片------------------------------->
+    <div  class="circle-song">
+        <img src="img/专辑.jpg" alt="404"/>
+    </div>
+    <div id="last"><img src="img/last.png"></div>
+    <div id="next"><img src="img/next.png"></div>
+    <div class="info">
+        <button type="button" class="btn btn-success"><img src="img/点赞2.png">     点赞</button>
+        <button type="button" class="btn btn-success"><img src="img/收藏.png">     收藏</button>
+        <button type="button" class="btn btn-success"><img src="img/下载.png">     下载</button>
+        <button type="button" class="btn btn-success"><img src="img/分享.png">     分享</button>
+    </div>
+    <div id="music-player">
+        <audio id="myAudio" controls>
+            <source src="music/菊次郎的夏天.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+</div>
 
 </body>
 </html>

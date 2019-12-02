@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/img/search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" afterDir="false" />
+    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="第一个页面的前端和歌曲播放页面的头完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +20,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/bootstrap-4.3.1-dist/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../songPlayer/dmeo/demo.html" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -88,7 +86,20 @@
       <workItem from="1574497490712" duration="54000" />
       <workItem from="1574502066973" duration="3738000" />
       <workItem from="1575094364325" duration="8351000" />
+      <workItem from="1575107992561" duration="274000" />
+      <workItem from="1575205751951" duration="3939000" />
+      <workItem from="1575252966368" duration="3067000" />
+      <workItem from="1575260855090" duration="4630000" />
+      <workItem from="1575273494071" duration="3164000" />
     </task>
+    <task id="LOCAL-00001" summary="第一个页面的前端和歌曲播放页面的头完成">
+      <created>1575108101818</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575108101818</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,5 +117,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="第一个页面的前端和歌曲播放页面的头完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="第一个页面的前端和歌曲播放页面的头完成" />
   </component>
 </project>
