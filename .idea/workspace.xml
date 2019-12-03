@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="第一个页面的前端和歌曲播放页面的头完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -91,6 +92,7 @@
       <workItem from="1575252966368" duration="3067000" />
       <workItem from="1575260855090" duration="4630000" />
       <workItem from="1575273494071" duration="3164000" />
+      <workItem from="1575377763001" duration="4640000" />
     </task>
     <task id="LOCAL-00001" summary="第一个页面的前端和歌曲播放页面的头完成">
       <created>1575108101818</created>
