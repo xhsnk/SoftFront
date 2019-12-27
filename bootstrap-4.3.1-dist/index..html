@@ -2,10 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Bootstrap框架</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>湖音乐首页</title>
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 <!--    <script type="text/javascript" src="js/script.js"></script>-->
 <!--    <link type="text/css" href="css/style.css" rel="stylesheet" />-->
     <style>
@@ -14,7 +17,10 @@
             padding: 0;
         }
         body {
-            background-color: #f2f2f2;
+            background: url("img/bg1.jpg") 0 0/100% 100% no-repeat;
+        }
+        #bg{
+            background-color: rgba(255,255,255,0.6);
         }
         /***********头部的导航栏*******/
         .head{
@@ -124,9 +130,37 @@
         /***********歌曲表格*******/
 
     </style>
+    <script>
+        window.onload = function() {
+            let songs = [
+                {name: "1", songer: "1"},
+                {name: "2", songer: "2"},
+                {name: "3", songer: "3"},
+            ];
+            function init() {
+                $('#songs').bootstrapTable({
+                    columns: [{
+                        field: 'name',
+                        title: 'Item ID'
+                    }, {
+                        field: 'songer',
+                        title: 'Item Name'
+                    }],
+                    data: songs
+                });
+                console.log()
+            }
+            init();
+
+
+        }
+    </script>
 </head>
 <!--<body class='particle-network-animation'>-->
 <body>
+<div id="bg">
+
+
 <!---------------------------------------上面的导航栏部分------------------------------->
     <div class="head">
         <div class="lable">网易云音乐</div>
@@ -177,6 +211,7 @@
 </div>
 
 <div class="main">
+
     <!--------------------歌单推荐--------------------->
     <div class="bigBox">
         <div class="boxHead">热门推荐</div>
@@ -221,9 +256,23 @@
     <!--------------------歌曲列表--------------------->
     <div class="bigBox">
         <div class="boxHead">榜单</div>
+        <div>
+         <table class="table table-hover" id="songs" >
+             <thead>
+             <tr>
+                <th data-field="name"></th>
+                <th data-field="songer"></th>
+             </tr>
+             </thead>
+
+            <tbody>
+
+            </tbody>
+         </table>
+        </div>
 
     </div>
+    </div>
 </div>
-
 </body>
 </html>
