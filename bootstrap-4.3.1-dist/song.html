@@ -13,44 +13,51 @@
             margin: 0;
             padding: 0;
         }
-        body {
-            background-color: #86cfda;
-        }
+       body{
+          background-color: #d4edda;
+       }
         /***********头部的导航栏*******/
         .head{
             position: relative;
             width: 100%;
             height: 100px;
             background-color: #1d2124;
-            color: #f2f2f2;
         }
-        .lable{
+        .lable, .loginIn{
             width: 200px;
             height: 100%;
             margin-left: 150px;
             font-size: 35px;
             line-height: 100px;
             display: inline-block;
+            color: #FFFFFF;
         }
         .headTab{
+            margin: 0;
+            padding: 0;
             display: inline-block;
             width: 800px;
             height: 100%;
             list-style: none;
             line-height: 100px;
             font-size: 20px;
-            color: #f2f2f2;
         }
         .headTab li{
             display: inline-block;
-            width: 100px;
+            width: 120px;
             text-align: center;
+            color: #b9bbbe;
+        }
+        .head li:hover{
+            background-color: #000000;
+            color: #FFFFFF;
+            height: 94px;
         }
         .head_search{
             display: inline-block;
             position: absolute;
             top: 25px;
-            right: 500px;
+            right: 490px;
             background-color: white;
             width: 300px;
             height: 50px;
@@ -67,6 +74,23 @@
             outline:none;
             color: black;
         }
+        .loginIn{
+            position: absolute;
+            top: 23px;
+            right: 250px;
+            width: 150px;
+            height: 55px;
+            font-size: 27px;
+            line-height: 55px;
+            text-align: center;
+            color: #d5d5d5;
+            border-radius: 30px;
+            border: 2px solid #d5d5d5;
+        }
+        .loginIn:hover{
+            color: #FFFFFF;
+            border: 3px solid #FFFFFF;
+        }
         .main{
             position: relative;
             width: 100%;
@@ -78,7 +102,9 @@
             left: 180px;
             width: 650px;
             height: 650px;
-            background-color: #7abaff;
+            background-image: url("img/songBg.jpg");
+            background-position: center;
+            background-size: 100% 100%;
             border-radius: 50%;
             text-align: center;
             line-height: 650px;
@@ -92,8 +118,8 @@
             position: absolute;
             top: 300px;
             left: 50px;
-            width: 50px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
         }
         #next{
             left: 850px;
@@ -109,10 +135,25 @@
         .info{
             position: absolute;
             top: 150px;
-            right: 150px;
-            width: 800px;
-            height: 400px;
-            background-color: #0f6674;
+            right: 250px;
+            width: 650px;
+            height: 550px;
+           /*background-color: #FFFFFF;*/
+            border-radius: 30px;
+        }
+        .songName{
+            position: absolute;
+            top: 70px;
+            right: 300px;
+            height: 90px;
+            line-height: 90px;
+            width: 600px;
+            font-size: 30px;
+        }
+        .infoInner{
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
         .btn{
             font-size: 22px;
@@ -123,22 +164,21 @@
         }
         .list-group{
             margin-top: 40px;
-            width: 80%;
+            width: 70%;
             height: 70%;
             overflow-y: scroll;
+            background-color: #abdde5;
         }
         /************歌曲播放*********/
         #music-player{
             position: fixed;
-            bottom: 0px;
+            bottom: -10px;
             z-index: 9999;
             width: 100%;
-            height: 100px;
-            /*background-color: #17a2b8;*/
         }
         #music-player audio{
             width: 100%;
-            /*height: 100px;*/
+            outline: none
         }
         #myAudio{
             height: 100px;
@@ -199,76 +239,68 @@
         }
         #comts>tbody>tr>td{ border-left: 0;border-right: 0;}
         #comts>thead>tr>th{ border: 0 }
-        .btn{
-            position: absolute;
-            right: 100px;
-            bottom: 50px;
-        }
-
     </style>
     <script>
         $(function(){
-            //获取上个页面参数
+
+            // 获取上个页面参数
             let url = window.location.href;
             let songId = url.split("="); //截取 url中的“=”,获得“=”后面的参数
+            let songItem = {};
 
-            //根据歌曲Id获取歌曲信息
+            // 根据歌曲Id获取歌曲信息，并进入该歌曲的播放  ajax请求需要同步！！！！
             function songInfo(songId){
+                let name = '';
                 $.ajax({
                     url: `http://localhost:8088/songs/querySongById?id=${songId}`,
-                    // data: {id: songId},
                     type: "POST",
                     dataType: "json",
+                    async: false,
                     success: function (data) {
-                        console.log(data)
+                        name = `${data.name} — ${data.author}`
+                        chang_music(data.url)
+                        const string = JSON.stringify(data);
+                        songItem = JSON.parse(string)
+                    }
+                })
+                $(".songName").text(name)
+
+            }
+            songInfo(songId[1]);
+
+            // 根据歌曲名获取所在歌单
+            function getSheet() {
+                $.ajax({
+                    url: 'http://localhost:8088/songs/querySongByAscription?ascription=贝多芬的悲伤',
+                    type: "POST",
+                    dataType: "json",
+                    // async: false,
+                    success: function (data) {
+                        songTblInit(data);
                     }
                 })
             }
-            songInfo(songId[1])
+            getSheet();
 
-            //监听音乐播放状态
-            function status(){
-                let rotate;  //唱片旋转定时器
-                let audioStatus = "paused";
-                let audio = document.getElementById("myAudio");
-                audio.addEventListener("playing", function(){
-                    audioStatus = "playing";
-                    rotate = setInterval(circle_rotate, 20)
+            // 初始化歌曲表格
+            function songTblInit(data){
+                $('#songList').bootstrapTable({
+                    columns: [{
+                        field: 'name',
+                        title: '',
+                        align: 'center',
+                        color: '#34ce57'
+                    }],
+                    data: data,
+                    onClickRow:function(row, $element,field){
+                        songInfo(row.id)
+                        $("#myAudio")[0].play()
+                    }
                 });
-                audio.addEventListener("pause", function(){
-                    audioStatus = "paused";
-                    clearInterval(rotate)
-                });
-            }
-            status();
+                $('#songList').bootstrapTable('hideLoading')
+            };
 
-            //唱片旋转函数
-            let degree = 0;
-            function circle_rotate() {
-                degree = degree+ 40 * Math.PI / 180;
-                $(".circle-song").css("transform", "rotate("+degree+"deg)");
-            }
-
-            //切换歌曲
-            function chang_music(songName) {
-                songName = "music/缺氧.MP3"
-                $("#music-player").html("")
-                  let aud = $(' <audio  id="myAudio" controls>\n' +
-                          '  <source src="'+songName+'">\n' +
-                          ' </audio>')
-                  //放到容器里区
-                  $("#music-player").html(aud)
-                  //获取当前audio
-                  var audio = $("#myAudio")[0];
-                  //局部load()一下
-                  aud.load();
-                  status();
-                  audio.play();
-            }
-            //测试切换歌曲功能
-            $("#next").click(chang_music)
-
-            //初始化表格
+            // 初始化评论表格
             function tableInit(comments){
                 $('#comts').bootstrapTable({
                     columns: [{
@@ -292,51 +324,60 @@
                 $('#comts').bootstrapTable('hideLoading')
             };
 
-            // 初始化歌曲表格
-            // function init() {
-            //     $('#songList').bootstrapTable({
-            //         columns: [{
-            //             field: 'name',
-            //             title: 'vwad'
-            //         }, {
-            //             field: 'songer',
-            //             title: 'Item Name'
-            //         }],
-            //         data: songs,
-            //         showLoading: false,
-            //         onClickRow:function(row, $element,field){
-            //             var i = $element.data('index');//可通过此参数获取当前行号
-            //             console.log(row)
-            //         }
-            //     });
-            //     $('#songs').bootstrapTable('hideLoading')
-            // }
-            // init();
 
-            // 获取歌曲列表
-            function  getSongs() {
-                $.ajax({
-                    url: 'http://localhost:8088/comment/selectAllCommentsByName?',
-                    data: param,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        // tableInit()
-                        // console.log(data)
-                        tableInit(data)
-                    }
-                })
+            // 进入某一首歌的播放，参数为歌曲路径(一般被调用)
+            function chang_music(songName) {
+                $(".songName").text(`${songItem.name} — ${songItem.author}`)
+                $("#music-player").html("")
+                let aud = $(' <audio id="myAudio" controls>\n' +
+                    '  <source src="'+songName+'">\n' +
+                    ' </audio>');
+                //放到容器里区
+                $("#music-player").html(aud)
+                //获取当前audio
+                var audio = $("#myAudio")[0];
+                //局部load()一下
+                aud.load();
+                status();
+                // audio.play();
             }
 
-            //跳转到歌曲页面
-            function jumpSongs(){
-                var aa = [];
-                var as = {};
-                as.s = 'ssss';
-                aa.push(as);
-                var aaS = JSON.stringify(aa);
-                var twoUrl = encodeURI("two.html?ownText=" + JSON.stringify(aaS)); //使用encodeURI编码
-                location.href = twoUrl;
+            //上下首切换（被调用）
+            function nextLast(num) {
+                const changSong = songItem.id + num;
+                songInfo(changSong)
+            };
+            $("#next").click(() => {
+                nextLast(1)
+                $("#myAudio")[0].play()
+            });
+            $("#last").click(() => {
+                nextLast(-1)
+                $("#myAudio")[0].play()
+            });
+
+
+            //监听音乐播放状态
+            function status(){
+                let rotate;  //唱片旋转定时器
+                let audioStatus = "paused";
+                let audio = document.getElementById("myAudio");
+                audio.addEventListener("playing", function(){
+                    audioStatus = "playing";
+                    rotate = setInterval(circle_rotate, 20)
+                });
+                audio.addEventListener("pause", function(){
+                    audioStatus = "paused";
+                    clearInterval(rotate)
+                });
+            }
+            status();
+
+            //唱片旋转函数
+            let degree = 0;
+            function circle_rotate() {
+                degree = degree+ 35 * Math.PI / 180;
+                $(".circle-song").css("transform", "rotate("+degree+"deg)");
             }
 
             // 查询评论
@@ -395,10 +436,10 @@
                 postComt()
             })
 
-
-
-
-
+            // 返回主页面
+            $(".loginIn").click(() => {
+                window.location.href="index..html?_ijt=6aid4g15ufn1cl52njrm81e20u"
+            });
 
         })
     </script>
@@ -407,67 +448,70 @@
 <body>
 <!---------------------------------------上面的导航栏部分------------------------------->
     <div class="head">
-    <div class="lable">网易云音乐</div>
-    <ul class="headTab">
-        <li>发现音乐</li>
-        <li>我的音乐</li>
-        <li>朋友</li>
-        <li>商城</li>
-        <li>音乐人</li>
-        <li>下载客户端</li>
-    </ul>
-    <div class="head_search">
-        <img src="img/search.png" alt="404">
-        <input type="text" id="search" placeholder="歌名/歌手/专辑"/>
+        <div class="lable">湖音乐</div>
+        <ul class="headTab">
+            <li>发现音乐</li>
+            <li>我的音乐</li>
+            <li>朋友</li>
+            <li>商城</li>
+            <li>音乐人</li>
+            <li>下载客户端</li>
+        </ul>
+        <div class="head_search">
+            <img src="img/search.png" alt="404">
+            <input type="text" id="search" placeholder="歌名/歌手/专辑"/>
+        </div>
+        <div class="loginIn">主 页</div>
     </div>
-</div>
 <!---------------------------------------播放音乐部分------------------------------->
-<div class="main">
-    <!---------------------------------------旋转唱片------------------------------->
-    <div  class="circle-song">
-        <img src="img/专辑.jpg" alt="404"/>
-    </div>
-    <div id="last"><img src="img/last.png"></div>
-    <div id="next"><img src="img/next.png"></div>
-    <div class="info">
-        <div class="btnList">
-            <button type="button" class="btn btn-success"><img src="img/点赞2.png">    点赞</button>
-            <button type="button" class="btn btn-success"><img src="img/收藏.png">     收藏</button>
-            <button type="button" class="btn btn-success"><img src="img/下载.png">     下载</button>
-            <button type="button" class="btn btn-success"><img src="img/分享.png">     分享</button>
+    <div class="main">
+        <!---------------------------------------旋转唱片------------------------------->
+        <div  class="circle-song">
+            <img src="img/专辑.jpg" alt="404"/>
         </div>
-        <div class="list-group">
-          <table class="table table-hover" id="songList"></table>
-      </div>
-    </div>
-    <div id="music-player">
-        <audio id="myAudio" controls>
-            <source src="music/菊次郎的夏天.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-    <!---------------------------------------旋转唱片------------------------------->
-    <div class="comment">
-        <div class="comment_line">评   论</div>
-<!-------------------添加评论----------->
-        <div class="myCmt">
-            <div class="userName">添加评论：</div>
-            <div class="form-group" id="form">
-                <input type="text" class="form-control" id="comment"
-                       placeholder="评论">
+        <div id="last"><img src="img/last.png"></div>
+        <div id="next"><img src="img/next.png"></div>
+        <div class="songName"></div>
+        <div class="info">
+            <div class="infoInner">
+                <div class="btnList">
+                    <button type="button" class="btn btn-success"><img src="img/点赞2.png">    点赞</button>
+                    <button type="button" class="btn btn-success"><img src="img/收藏.png">     收藏</button>
+                    <button type="button" class="btn btn-success"><img src="img/下载.png">     下载</button>
+                    <button type="button" class="btn btn-success"><img src="img/分享.png">     分享</button>
+                </div>
+                <div class="list-group">
+                  <table class="table table-hover" id="songList"></table>
+                </div>
             </div>
-<!--            <div class="btn">-->
-            <button type="button"  id="postComt" class="btn btn-success" >发  布</button>
-<!--            </div>-->
         </div>
-<!-------------------查看评论----------->
-        <div class="lookCmt">
-            <table class="table table-hover" id="comts"></table>
+        <div id="music-player">
+            <audio id="myAudio" controls>
+                <source src="music/菊次郎的夏天.mp3" type="audio/mpeg">
+            </audio>
         </div>
+        <!---------------------------------------旋转唱片------------------------------->
+        <div class="comment">
+            <div class="comment_line">评   论</div>
+    <!-------------------添加评论----------->
+            <div class="myCmt">
+                <div class="userName">添加评论：</div>
+                <div class="form-group" id="form">
+                    <input type="text" class="form-control" id="comment"
+                           placeholder="评论">
+                </div>
+    <!--            <div class="btn">-->
+<!--                <button type="button"  id="postComt" class="btn btn-success" >发  布</button>-->
+    <!--            </div>-->
+            </div>
+    <!-------------------查看评论----------->
+            <div class="lookCmt">
+                <table class="table table-hover" id="comts"></table>
+            </div>
 
 
 
+        </div>
     </div>
-</div>
-
 </body>
 </html>

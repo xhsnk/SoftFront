@@ -23,7 +23,7 @@
         #bg{
             width: 100%;
             height: 100%;
-            background-color: rgba(255,255,255,0.6);
+            background-color: rgba(255,255,255,0.2);
         }
         /**********头部导航栏**********/
         .head{
@@ -103,8 +103,11 @@
             left: 360px;
             width: 60%;
             height: 100px;
-            font-size: 40px;
+            font-size: 35px;
             line-height: 100px;
+        }
+        #sheetName{
+            font-size: 40px;
         }
         .creater{
             position: absolute;
@@ -122,11 +125,13 @@
           var twoText = window.location.href;
           var twodata = twoText.split("=");
           var param = JSON.parse(decodeURI(twodata[1]))
-           $("#image1").attr('src',param.url);
-          $(".sheetName").text(param.name);
+          $("#image1").attr('src',param.url);
+
+
+          $("#sheetName").text(param.name);
             $(".loginIn").click(() => {
-                window.location.href="index..html?_ijt=6aid4g15ufn1cl52njrm81e20u"
-            });
+              window.location.href="index..html?_ijt=6aid4g15ufn1cl52njrm81e20u"
+          });
 
           //初始化表格
           function initTable(data){
@@ -146,8 +151,7 @@
                   data: data,
                   showLoading: false,
                   onClickRow:function(row, $element,field){
-                      var i = $element.data('index');//可通过此参数获取当前行号
-                      console.log(row)
+                     window.location.href = `song.html?id=${row.id}`
                   }
               });
               $('#sheet').bootstrapTable('hideLoading')
@@ -188,7 +192,7 @@
     <div class="main">
         <div class="info">
             <img  id="image1" alt="404">
-            <div class="sheetName"></div>
+            <div class="sheetName">歌单    <span id="sheetName"></span></div>
             <div class="creater"></div>
         </div>
         <div class="sheet">
