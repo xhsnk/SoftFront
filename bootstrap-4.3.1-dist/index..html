@@ -28,35 +28,42 @@
             width: 100%;
             height: 100px;
             background-color: #1d2124;
-            color: #f2f2f2;
         }
-        .lable{
+        .lable, .loginIn{
             width: 200px;
             height: 100%;
             margin-left: 150px;
             font-size: 35px;
             line-height: 100px;
             display: inline-block;
+            color: #FFFFFF;
         }
         .headTab{
+            margin: 0;
+            padding: 0;
             display: inline-block;
             width: 800px;
             height: 100%;
             list-style: none;
             line-height: 100px;
             font-size: 20px;
-            color: #f2f2f2;
         }
         .headTab li{
             display: inline-block;
-            width: 100px;
+            width: 120px;
             text-align: center;
+            color: #b9bbbe;
+        }
+        .head li:hover{
+            background-color: #000000;
+            color: #FFFFFF;
+            height: 94px;
         }
         .head_search{
             display: inline-block;
             position: absolute;
             top: 25px;
-            right: 500px;
+            right: 400px;
             background-color: white;
             width: 300px;
             height: 50px;
@@ -73,6 +80,13 @@
             outline:none;
             color: black;
         }
+        .loginIn{
+            position: absolute;
+            top: 5px;
+            right: 100px;
+            font-size: 27px;
+        }
+
         /***********中间的身体*******/
         .main{
             width: 60%;
@@ -99,6 +113,7 @@
             line-height: 50px;
             padding-left: 50px;
             border-bottom: 3px solid green;
+            margin-top: 30px;
         }
         .songSheet{
             width: 100%;
@@ -128,29 +143,107 @@
             border-radius: 40%;
         }
         /***********歌曲表格*******/
+        #songs>tbody>tr>td{ border-left: 0;border-right: 0;}
 
     </style>
     <script>
         window.onload = function() {
-            let songs = [
-                {name: "1", songer: "1"},
-                {name: "2", songer: "2"},
-                {name: "3", songer: "3"},
-            ];
-            function init() {
-                $('#songs').bootstrapTable({
+
+            //跳转到相应的歌单页面
+            function jumpSheet(id, name){
+                let param = {};
+                param.id = id;
+                param.name = name;
+                param.url = `img/songSheet${id}.jpg`
+                const params = JSON.stringify(param);
+                const aurl = encodeURI("songList.html?ownText=" + params);
+                location.href = aurl;
+            }
+            $("#jump1").click(() =>{
+                jumpSheet(1 , "贝多芬的悲伤")});
+            $("#jump2").click(() =>{
+                jumpSheet(2 , "七月七日晴")});
+            $("#jump3").click(() =>{
+                jumpSheet(3 , "错误的相遇")});
+            $("#jump4").click(() =>{
+                jumpSheet(4 , "无与伦比的美")});
+            $("#jump5").click(() =>{
+                jumpSheet(5 , "六月的雨")});
+            $("#jump6").click(() =>{
+                jumpSheet(6 , "秋天的童话")});
+            $("#jump7").click(() =>{
+                jumpSheet(7 , "表面的和平")});
+            $("#jump8").click(() =>{
+                jumpSheet(8 , "华丽的冒险")});
+
+            //初始化歌曲表格
+            function init(data) {
+                $("#songs").bootstrapTable({
                     columns: [{
                         field: 'name',
-                        title: 'Item ID'
+                        title: '歌曲名称',
+                        align: 'center',
                     }, {
-                        field: 'songer',
-                        title: 'Item Name'
+                        field: 'author',
+                        title: '歌手',
+                        align: 'center',
                     }],
-                    data: songs
+                    data: data,
+                    showLoading: false,
+                    onClickRow:function(row, $element,field){
+                        const id = row.id;
+                        window.location.href = `song.html?id=${id}`
+                    }
                 });
-                console.log()
+               $('#songs').bootstrapTable('hideLoading')
+                console.log('初始化表格')
             }
-            init();
+            //获取歌曲列表
+            function  getSongs() {
+                $.ajax({
+                    url: 'http://localhost:8088/songs/querySongByAscription?ascription=贝多芬的悲伤',
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        init(data)
+                    }
+                })
+            }
+            getSongs();
+
+            //跳转到歌曲页面
+            function jumpSongs(){
+                var aa = [];
+                var as = {};
+                as.s = 'ssss';
+                aa.push(as);
+                var aaS = JSON.stringify(aa);
+                var twoUrl = encodeURI("two.html?ownText=" + JSON.stringify(aaS)); //使用encodeURI编码
+                location.href = twoUrl;
+            }
+            //搜索歌曲
+            function searchSong(){
+                let param = $("#search").val()
+                // $ajax({
+                //     url: '',
+                //     data: ,
+                //     method
+                // })
+                console.log(param)
+            }
+            $('#search').bind('keypress',function(event){
+                if(event.keyCode == "13")
+                {
+                    searchSong()
+                }
+            });
+
+            //登录跳转
+            $(".loginIn").click( () => {
+                 window.location.href="login.html"
+
+            })
 
 
         }
@@ -163,7 +256,7 @@
 
 <!---------------------------------------上面的导航栏部分------------------------------->
     <div class="head">
-        <div class="lable">网易云音乐</div>
+        <div class="lable">湖音乐</div>
         <ul class="headTab">
             <li>发现音乐</li>
             <li>我的音乐</li>
@@ -176,6 +269,7 @@
             <img src="img/search.png" alt="404">
             <input type="text" id="search" placeholder="歌名/歌手/专辑"/>
         </div>
+        <div class="loginIn">登 录</div>
     </div>
 <!------------------------------------------中间的身体---------------------------------->
     <div class="carousel"></div>
@@ -216,21 +310,21 @@
     <div class="bigBox">
         <div class="boxHead">热门推荐</div>
         <ul class="songSheet">
-            <li><img src="img/songSheet1.jpg">
+            <li id="jump1"><img src="img/songSheet1.jpg">
                 <h3>[vip专享]一周新歌推荐</h3></li>
-            <li><img src="img/songSheet2.jpg">
+            <li id="jump2"><img src="img/songSheet2.jpg">
                 <h3>愿有星光的夜晚，总有浪漫期许</h3></li>
-            <li><img src="img/songSheet3.jpg">
+            <li id="jump3"><img src="img/songSheet3.jpg">
                 <h3>成长篇| 认识到自己的平凡，并且接受</h3></li>
-            <li><img src="img/songSheet4.jpg">
-                <h3>【电台】小王子 Chapter nine</h3></li>
-            <li><img src="img/songSheet5.jpg">
+            <li id="jump4"><img src="img/songSheet4.jpg">
+                <h3>【电5】小王子 Chapter nine</h3></li>
+            <li id="jump5"><img src="img/songSheet5.jpg">
                 <h3>经典老歌，久听不厌</h3></li>
-            <li><img src="img/songSheet6.jpg">
+            <li id="jump6"><img src="img/songSheet6.jpg">
                 <h4>【电台】129 颠颠|编辑<br>罗丹妮：谁来记录我们乏善可陈的生活</h4></li>
-            <li><img src="img/songSheet7.jpg">
+            <li id="jump7"><img src="img/songSheet7.jpg">
                 <h3>那些评论超过十万的歌，请随机播放</h3></li>
-            <li><img src="img/songSheet8.jpg">
+            <li id="jump8"><img src="img/songSheet8.jpg">
                 <h3>【电台】琴师（Cover 音频怪物）</h3></li>
         </ul>
     </div>
@@ -257,18 +351,7 @@
     <div class="bigBox">
         <div class="boxHead">榜单</div>
         <div>
-         <table class="table table-hover" id="songs" >
-             <thead>
-             <tr>
-                <th data-field="name"></th>
-                <th data-field="songer"></th>
-             </tr>
-             </thead>
-
-            <tbody>
-
-            </tbody>
-         </table>
+          <table class="table table-hover table-striped" id="songs"></table>
         </div>
 
     </div>
