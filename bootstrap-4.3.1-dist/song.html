@@ -164,11 +164,16 @@
         }
         .list-group{
             margin-top: 40px;
-            width: 70%;
-            height: 70%;
+            width: 85%;
+            height: 80%;
             overflow-y: scroll;
-            background-color: #abdde5;
+            background-color: #f9f9f9;
+            border-radius: 5px;
         }
+        .table{
+            border-radius: 5px;
+        }
+
         /************歌曲播放*********/
         #music-player{
             position: fixed;
@@ -183,6 +188,7 @@
         #myAudio{
             height: 100px;
         }
+
         /************评论*********/
         .comment{
             position: absolute;    /*相对于整个文档定位*/
@@ -191,11 +197,11 @@
             right: 0;
             padding: 40px 20px;
             margin: auto;
-            width: 70%;
-            height: 700px;
-            background-color: #abdde5;
+            width: 65%;
+            border-radius: 30px;
+            /*background-color: #ececf6;*/
         }
-        .comment_line{
+        .comment_line,#comment_line{
             width: 90%;
             height: 50px;
             font-size: 30px;
@@ -206,7 +212,7 @@
         }
         .myCmt{
             width: 90%;
-            height: 300px;
+            height: 280px;
             margin-top: 30px;
             background-color: #FFFFFF;
             position: relative;
@@ -235,10 +241,43 @@
         }
         .lookCmt{
             width: 90%;
-            background-color: #9fcdff;
+            background-color: #FFFFFF;
         }
         #comts>tbody>tr>td{ border-left: 0;border-right: 0;}
         #comts>thead>tr>th{ border: 0 }
+        #postComt{
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            width: 100px;
+        }
+        .noUse{
+            width: 100%;
+            height: 150px;
+        }
+        #comment_line{
+            width: 100%;
+        }
+        /************滚动条*********/
+        .list-group::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            width : 6px;  /*高宽分别对应横竖滚动条的尺寸*/
+            height: 1px;
+        }
+        .list-group::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块*/
+            border-radius: 6px;
+            box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background   : #34ce57;
+        }
+        .list-group::-webkit-scrollbar-track {
+            /*滚动条里面轨道*/
+            box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            background   : #ededed;
+        }
+
+
     </style>
     <script>
         $(function(){
@@ -247,6 +286,19 @@
             let url = window.location.href;
             let songId = url.split("="); //截取 url中的“=”,获得“=”后面的参数
             let songItem = {};
+
+            // 定义一个随机生成评论用户的方法
+            function comtAuthor() {
+                const author = ["龚梅梅","王慧慧","王彬洁","曹进莹","丁江","李小响","王鑫鑫","吴小迪","西红柿纽扣","不知名人士",
+                    "吃粽子的瓜","吃猹的闰土","博君一肖是真的","搜狗音乐官方","风一吹就瘦了","一支小鱼茗","我磕的cp是真的","班草","追风少年刘有权","一夜暴富",]
+                    //x上限，y下限
+                    const x = 19;
+                    const y = 0;
+                    var rand = parseInt(Math.random() * (x - y + 1) + y);
+                    const user = author[rand]
+                return user;
+            }
+
 
             // 根据歌曲Id获取歌曲信息，并进入该歌曲的播放  ajax请求需要同步！！！！
             function songInfo(songId){
@@ -264,6 +316,7 @@
                     }
                 })
                 $(".songName").text(name)
+                getData(songItem.name)  //根据歌曲名获取评论
 
             }
             songInfo(songId[1]);
@@ -300,8 +353,20 @@
                 $('#songList').bootstrapTable('hideLoading')
             };
 
-            // 初始化评论表格
+            //获取评论数据
+            function getData(aim){
+                $.ajax({
+                    url: `http://localhost:8088/comment/selectAllCommentsByName?aim=${aim}`,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        tableInit(data)
+                    }
+                });
+            }
+            // 初始化评论表格(被调用)
             function tableInit(comments){
+                $('#comts').bootstrapTable('destroy');
                 $('#comts').bootstrapTable({
                     columns: [{
                         field: 'author',
@@ -309,12 +374,15 @@
                         width: '220px',
                         halign: 'center',
                         align: 'center',
-                        color: '#34ce57'
+                        backgroundColor: 'red'
                     }, {
                         field: 'content',
                         title: '',
                         halign: 'center'
                     }],
+                    cellStyle:{
+                        css:{"background-color":"red"}
+                    },
                     data: comments,
                     onClickRow:function(row, $element,field){
                         var i = $element.data('index');//可通过此参数获取当前行号
@@ -323,7 +391,6 @@
                 });
                 $('#comts').bootstrapTable('hideLoading')
             };
-
 
             // 进入某一首歌的播放，参数为歌曲路径(一般被调用)
             function chang_music(songName) {
@@ -380,61 +447,36 @@
                 $(".circle-song").css("transform", "rotate("+degree+"deg)");
             }
 
-            // 查询评论
-            let param = {aim: "十年"}
-            function getData(param){
-                $.ajax({
-                    url: 'http://localhost:8088/comment/selectAllCommentsByName?',
-                    data: param,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        // tableInit()
-                        // console.log(data)
-                        tableInit(data)
-                    }
-                });
-            }
-            getData(param)
-
             //发布评论
             function postComt() {
-                // let param = {
-                //     author: "默认用户",
-                //     commentAim: "string",
-                //     content: "string",
-                //     id: 0,
-                //     praisePoints: 0,
-                //     publicationTime: "string",
-                //     replayId: "string"
-                // };
                 let param = {
-                    "author": "string",
-                    "commentAim": "string",
-                    "content": "string",
-                    "id": 0,
-                    "praisePoints": 0,
-                    "publicationTime": "string",
-                    "replayId": "string"
-                }
-                // param.author = auther;
+                    author: "默认用户",
+                    commentAim: "string",
+                    content: "string",
+                    id: 0,
+                    praisePoints: 0,
+                    publicationTime: "string",
+                    replayId: "string"
+                };
+                param.author = comtAuthor();
                 param.content = $("#comment").val();
+                param.commentAim = songItem.name;
                 console.log(param)
                 $.ajax({
                     url: 'http://localhost:8088/comment/addComments',
-                    // data: JSON.stringify(param),
                     data: JSON.stringify(param),
                     type: "POST",
                     dataType: "json",
+                    async: false,
                     contentType: "application/json",
-                    success: function (data) {
-                       console.log(data)
-                    }
-                })
+                    success: function (data) {}
+                });
+                getData(songItem.name) //再一次查询评论数据，渲染表格
+                $("#comment").val('');  //清空评论框
             }
             $("#postComt").click(() => {
                 postComt()
-            })
+            });
 
             // 返回主页面
             $(".loginIn").click(() => {
@@ -500,15 +542,16 @@
                     <input type="text" class="form-control" id="comment"
                            placeholder="评论">
                 </div>
-    <!--            <div class="btn">-->
-<!--                <button type="button"  id="postComt" class="btn btn-success" >发  布</button>-->
-    <!--            </div>-->
+                <div class="comBtn">
+                <button type="button"  id="postComt" class="btn btn-success" >发  布</button>
+                </div>
             </div>
     <!-------------------查看评论----------->
             <div class="lookCmt">
+                <div id="comment_line"></div>
                 <table class="table table-hover" id="comts"></table>
             </div>
-
+            <div class="noUse"></div>
 
 
         </div>

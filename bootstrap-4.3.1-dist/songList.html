@@ -126,6 +126,7 @@
           var twodata = twoText.split("=");
           var param = JSON.parse(decodeURI(twodata[1]))
           $("#image1").attr('src',param.url);
+            console.log(param)
 
 
           $("#sheetName").text(param.name);
@@ -133,7 +134,7 @@
               window.location.href="index..html?_ijt=6aid4g15ufn1cl52njrm81e20u"
           });
 
-          //初始化表格
+          // 初始化表格
           function initTable(data){
               $('#sheet').bootstrapTable({
                   columns: [{
@@ -158,18 +159,19 @@
           }
 
           //发送请求获取歌单列表
+          getSongList(param.name);
           function getSongList(name){
               $.ajax({
                   url: `http://localhost:8088/songs/querySongByAscription?ascription=${name}`,
                   type: "POST",
                   dataType: "json",
                   success: function (data) {
-                      console.log(data)
+                      console.log(data);
                       initTable(data)
                   }
               })
           }
-          getSongList("贝多芬的悲伤")
+
       })
     </script>
 </head>

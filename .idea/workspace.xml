@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="快完成了">
+    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="基本完成，，还差两个功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/songList.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/songList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/test.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +113,9 @@
       <workItem from="1578104063621" duration="1000" />
       <workItem from="1578104337295" duration="150000" />
       <workItem from="1578105486056" duration="20747000" />
-      <workItem from="1578133662582" duration="6817000" />
+      <workItem from="1578133662582" duration="7273000" />
+      <workItem from="1578143600766" duration="336000" />
+      <workItem from="1578196424939" duration="9764000" />
     </task>
     <task id="LOCAL-00001" summary="第一个页面的前端和歌曲播放页面的头完成">
       <created>1575108101818</created>
@@ -142,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578125648368</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="基本完成，，还差两个功能">
+      <created>1578140514014</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1578140514014</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +176,7 @@
     <MESSAGE value="歌曲播放页面评论" />
     <MESSAGE value="表格渲染成功" />
     <MESSAGE value="快完成了" />
-    <option name="LAST_COMMIT_MESSAGE" value="快完成了" />
+    <MESSAGE value="基本完成，，还差两个功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本完成，，还差两个功能" />
   </component>
 </project>

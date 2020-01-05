@@ -144,6 +144,8 @@
         }
         /***********歌曲表格*******/
         #songs>tbody>tr>td{ border-left: 0;border-right: 0;}
+        #searchSong>tbody>tr>td{ border-left: 0;border-right: 0;}
+
 
     </style>
     <script>
@@ -196,7 +198,6 @@
                     }
                 });
                $('#songs').bootstrapTable('hideLoading')
-                console.log('初始化表格')
             }
             //获取歌曲列表
             function  getSongs() {
@@ -205,12 +206,13 @@
                     type: "POST",
                     dataType: "json",
                     success: function (data) {
-                        console.log(data)
                         init(data)
                     }
                 })
             }
             getSongs();
+
+
 
             //跳转到歌曲页面
             function jumpSongs(){
@@ -222,27 +224,57 @@
                 var twoUrl = encodeURI("two.html?ownText=" + JSON.stringify(aaS)); //使用encodeURI编码
                 location.href = twoUrl;
             }
-            //搜索歌曲
-            function searchSong(){
-                let param = $("#search").val()
-                // $ajax({
-                //     url: '',
-                //     data: ,
-                //     method
-                // })
-                console.log(param)
-            }
+
+
             $('#search').bind('keypress',function(event){
-                if(event.keyCode == "13")
+                if(event.keyCode === 13)
                 {
-                    searchSong()
+                    searchSong();
+                    $("#search").val('')
                 }
             });
+            // 根据歌名或者歌手搜索歌曲
+            function searchSong(){
+                let param = $("#search").val()
+                $.ajax({
+                    url: `http://localhost:8088/songs/querySongByAnything?string=${param}`,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#modal").modal('show');
+                        initSearchTbl(data);
+                    }
+                })
+            }
+
+            // 初始化搜索结果表格
+            function initSearchTbl(data) {
+                $('#searchSong').bootstrapTable('destroy');
+                $("#searchSong").bootstrapTable({
+                    columns: [{
+                        field: 'author',
+                        title: '',
+                        align: 'center',
+                        width: '230px;'
+                    }, {
+                        field: 'name',
+                        title: '',
+                        align: 'center',
+                    }],
+                    data: data,
+                    showLoading: false,
+                    onClickRow:function(row, $element,field){
+                        const id = row.id;
+                        window.location.href = `song.html?id=${id}`
+                    }
+                });
+                $('#searchSong').bootstrapTable('hideLoading')
+            }
+
 
             //登录跳转
             $(".loginIn").click( () => {
-                 window.location.href="login.html"
-
+                 alert("暂未开发，敬请期待！")
             })
 
 
@@ -304,7 +336,7 @@
     </a>
 </div>
 
-<div class="main">
+    <div class="main">
 
     <!--------------------歌单推荐--------------------->
     <div class="bigBox">
@@ -355,6 +387,27 @@
         </div>
 
     </div>
+    </div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        搜索结果
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-striped" id="searchSong"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
 </div>
 </body>
