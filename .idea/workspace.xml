@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="基本完成，，还差两个功能">
+    <list default="true" id="e35aab73-25ef-4924-9f4c-67a52d0cd366" name="默认更改列表" comment="基本完成，，细节可以再完善一下">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/index..html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-4.3.1-dist/song.html" afterDir="false" />
@@ -115,7 +115,8 @@
       <workItem from="1578105486056" duration="20747000" />
       <workItem from="1578133662582" duration="7273000" />
       <workItem from="1578143600766" duration="336000" />
-      <workItem from="1578196424939" duration="9764000" />
+      <workItem from="1578196424939" duration="15286000" />
+      <workItem from="1578292578476" duration="2045000" />
     </task>
     <task id="LOCAL-00001" summary="第一个页面的前端和歌曲播放页面的头完成">
       <created>1575108101818</created>
@@ -152,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578140514014</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="基本完成，，细节可以再完善一下">
+      <created>1578211293797</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1578211293797</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +185,7 @@
     <MESSAGE value="表格渲染成功" />
     <MESSAGE value="快完成了" />
     <MESSAGE value="基本完成，，还差两个功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本完成，，还差两个功能" />
+    <MESSAGE value="基本完成，，细节可以再完善一下" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本完成，，细节可以再完善一下" />
   </component>
 </project>

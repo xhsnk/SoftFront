@@ -58,6 +58,7 @@
             background-color: #000000;
             color: #FFFFFF;
             height: 94px;
+            cursor:pointer;
         }
         .head_search{
             display: inline-block;
@@ -134,6 +135,10 @@
         }
         .songSheet img:hover{
             border: 2px solid #34ce57;
+            cursor:pointer;
+        }
+        .loginIn:hover{
+            cursor: pointer;
         }
         .newSong .songSheet li{
             width: 15%;
@@ -271,12 +276,10 @@
                 $('#searchSong').bootstrapTable('hideLoading')
             }
 
-
             //登录跳转
             $(".loginIn").click( () => {
                  alert("暂未开发，敬请期待！")
             })
-
 
         }
     </script>
